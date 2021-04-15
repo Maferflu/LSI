@@ -6,6 +6,7 @@
 package lsi;
 
 import Jama.*;
+import java.util.Arrays;
 
 /**
  *
@@ -23,6 +24,22 @@ public class LSI {
         }
         similarity = Math.sqrt(similarity);
         return similarity;
+    }
+    
+    public static double[] nRelevant(int n, double freqt[][], double q[])
+    {
+        double[] relevant = new double[n];
+        double[] similarity = new double[freqt.length];
+        for(int j=0; j<freqt.length;j++)
+        {
+            //puede estar tomando mal la sección de la matriz
+            similarity[j] = euclidean(freqt[j], q);
+        }
+        
+        Arrays.sort(similarity);
+        for (int i = 0; i < n; i++)
+            relevant[i] = similarity[i];
+        return relevant;
     }
 
     public static void printMatrix(double a[][])
