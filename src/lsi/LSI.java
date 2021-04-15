@@ -13,10 +13,16 @@ import Jama.*;
  */
 public class LSI {
     
-    //Diferencia entre ambas matrices
-    public void euclidean()
+    //Diferencia entre ambos documentos
+    public static double euclidean(double a[], double b[])
     {
-        
+        double similarity = 0.0;
+        for(int i=0; i<a.length;i++)
+        {
+            similarity = similarity + ((a[i]-b[i])*(a[i]-b[i]));
+        }
+        similarity = Math.sqrt(similarity);
+        return similarity;
     }
 
     public static void printMatrix(double a[][])
