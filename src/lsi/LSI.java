@@ -54,6 +54,41 @@ public class LSI {
         }
         return s.length-1;
     }
+    
+    public static double[][] cut(Matrix matrix, int k, int r)
+    {
+        
+        double cMatrix[][], aMatrix[][];
+        aMatrix = matrix.getArrayCopy();
+        if(matrix.getColumnDimension()==r)
+        {
+            //column [][k]
+            cMatrix = new double[matrix.getRowDimension()][k];
+            for(int i=0; i<matrix.getRowDimension(); i++)
+            {
+                for(int j=0; j<k ; j++)
+                {
+                    cMatrix[i][j] = aMatrix[i][j];
+                }
+            }
+            return cMatrix;
+        }
+        else if(matrix.getRowDimension()==r)
+        {
+            //row [k][]
+            cMatrix = new double[k][matrix.getColumnDimension()];
+            for(int i=0; i<k; i++)
+            {
+                for(int j=0; j<matrix.getColumnDimension(); j++)
+                {
+                    cMatrix[i][j] = aMatrix[i][j];
+                }
+            }
+            return cMatrix;
+        }
+        else
+            return null;
+    }
 
     public static void printMatrix(double a[][])
     {
@@ -73,6 +108,8 @@ public class LSI {
      */
     
     public static void main(String[] args) {
+        int k, r;
+        
         //JAVA is ROW FIRST
         
         //Test Values: https://web.mit.edu/be.400/www/SVD/Singular_Value_Decomposition.htm#:~:text=The%20SVD%20represents%20an%20expansion,up%20the%20columns%20of%20U.
@@ -91,6 +128,7 @@ public class LSI {
 
         //Los resultados de la matriz están redondeados hacia abajo 
         Matrix D = C.svd().getS();
+        r = D.getColumnDimension();
         //D.print(C.getColumnDimension(), 0);
         System.out.println('S');
         printMatrix(D.getArrayCopy()); //puntos decimales
@@ -101,8 +139,12 @@ public class LSI {
         System.out.println("D\u1d40"); //unicode for the T superscript
         printMatrix(F.getArrayCopy()); //puntos decimales      
        
-        int k= findCriticalK(D.getArrayCopy());
+        //get Critical K
+        k = findCriticalK(D.getArrayCopy());
         System.out.println(k);
+        
+        //Cut a Matrix
+        printMatrix(cut(F, k, r));
         
     }
     
