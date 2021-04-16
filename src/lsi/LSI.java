@@ -37,19 +37,19 @@ public class LSI {
     public static double[][] nRelevant(int n, double freqt[][], double q[][])
     {
         double[][] relevant = new double[n][2];
-        double[][] similarity = new double[freqt.length][2];
-        double [] query = new double[freqt.length];
-        for(int i=0;i<freqt.length-1;i++)
+        double[][] similarity = new double[freqt[0].length][2];
+        double [] query = new double[freqt[0].length];
+        for(int i=0;i<freqt[0].length-1;i++)
         {
             query[i] = q[i][0];
         }
-        for(int j=0; j<freqt.length;j++)
+        for(int j=0; j<freqt[0].length;j++)
         {
             //puede estar tomando mal la sección de la matriz
             similarity[j][0] = j;
             similarity[j][1] = euclidean(freqt[j], query);
         }
-        
+        printMatrix(similarity);
         BubbleSort(similarity);
         for (int i = 0; i < n; i++)
         {
@@ -233,13 +233,15 @@ public class LSI {
         printMatrix(cut(F, k, r));//*/
         
         double[][] q = {{5.0}, {6.0}, {0.0}, {8.0}, {1.0}, {2.0}, {0.0}, {0.0}};
+        //printMatrix(nRelevant(3, C.getArrayCopy() , q));
+        
         Matrix query = new Matrix(q);
         q = query.svd().getU().getArrayCopy();
         printMatrix(q);
         printMatrix(q=cut(query, k, r));
         
-        printMatrix(nRelevant(3, cut(F, k, r), q));
-        System.out.println(nRelevant(3, cut(F, k, r), q).length);
+        printMatrix(nRelevant(3, cut(E, k, r), q));
+        //System.out.println(nRelevant(3, cut(F, k, r), q).length);
     }
 
     public static void BubbleSort(double[][] similarity) 
