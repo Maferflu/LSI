@@ -238,7 +238,7 @@ public class LSI {
         Matrix query = new Matrix(q);
         q = query.svd().getU().getArrayCopy();
         printMatrix(q);
-        printMatrix(q=cut(query, k, r));
+        printMatrix(q=cut(query.svd().getU(), k, r));
         
         printMatrix(nRelevant(3, cut(E, k, r), q));
         //System.out.println(nRelevant(3, cut(F, k, r), q).length);
